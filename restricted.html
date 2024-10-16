@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character Limit Textarea</title>
+  <style>
+    .character-counter textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      resize: none;
+      box-sizing: border-box;
+    }
+
+    .character-counter textarea.limit-reached {
+      border-color: red;
+    }
+
+    .character-counter p {
+      font-size: 14px;
+      color: #555;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="character-counter">
+    <textarea id="message" placeholder="Type your message..."></textarea>
+    <p id="char-count">0 / 100 characters</p>
+  </div>
+
+  <script>
+    const textarea = document.getElementById('message');
+    const charCount = document.getElementById('char-count');
+    const maxChars = 100;
+
+    // Event listener for input in the textarea
+    textarea.addEventListener('input', function () {
+      const currentLength = textarea.value.length;
+
+      // Update the character count display
+      charCount.textContent = `${currentLength} / ${maxChars} characters`;
+
+      // Check if the limit is reached
+      if (currentLength >= maxChars) {
+        textarea.classList.add('limit-reached');
+      } else {
+        textarea.classList.remove('limit-reached');
+      }
+
+      // Prevent further input if the character limit is reached
+      if (currentLength > maxChars) {
+        textarea.value = textarea.value.substring(0, maxChars);
+      }
+    });
+  </script>
+
+</body>
+</html>
